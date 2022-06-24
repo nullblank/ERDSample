@@ -1,0 +1,1620 @@
+  <?php //header('Refresh: 10'); ?>
+<!--
+  <link href="<?php echo base_url();?>assets/bootstrap/css/bootstrap.css" rel="stylesheet">
+  <link href="<?php echo base_url();?>assets/boostrap/css/bootstrap.min.css" rel="stylesheet">
+-->
+<style>
+th {
+  cursor: pointer;
+}
+table {
+ 
+  border: 1px solid #C5B798;
+  margin-top: 0px;
+  margin-bottom: 2px;
+}
+</style>
+  <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+    <h1 class="page-header">Patient Dashboard</h1>
+	<br>
+
+	<h4 style="color:blue"  class="page-header" style="border-bottom: 1px solid #004d0029">Total Enrollment  SY <?php echo $current_year->schoolyear;?> - [  <?php echo $totalenrolment->total;?> ] </h4> 	
+ 
+	<!--Start Table -->
+	<h4 style="color:blue"  class="page-header" style="border-bottom: 1px solid #004d0029">Distribution of Enrolment Data - Gender</h4> 		
+
+	<table align="left" width="100%">
+		<tr>
+			<td width="50%" align="left">				
+				<div  id="gender_chart" style="width: 500px; height: 300px;"></div>					
+			</td>
+			<td width="50%">			
+			<!--<label>Distribution of Total Enrolment by Gender</label>-->
+			<table align="left"  width="100%" border="1" class="sortable">		
+              <thead>			   				
+                <tr>				    
+                    <th bgcolor="#F2D7D5"style="font-size:20px;" width="70%">Gender</th>
+					<th bgcolor="#F2D7D5"style="font-size:20px;" class="text-center" width="20%">Total</th>	
+					<th bgcolor="#F2D7D5"style="font-size:20px;" class="text-center" width="10%">%</th>	
+							
+                </tr>
+              </thead>
+              <tbody>
+             <?php if($genders):?>	
+				    <?php $tPercent=0;?>
+                    <?php foreach($genders as $gender):?>
+                    <tr style="padding:0px;LINE-HEIGHT:30px">	                   				
+                          <td style="font-size:20px;" width="70%"><?php echo $gender->Gender;?></td>
+						  <td style="font-size:20px;" align="center" width="20%"><?php echo $gender->Total;?></td>	
+						  <td style="font-size:20px;" align="center" width="10%"><?php echo number_format(($gender->Total/$totalenrolment->total)*100,0);?></td>	
+						  <?php $tPercent = $tPercent + ($gender->Total/$totalenrolment->total)*100;?>
+					</tr>
+					<?php endforeach;?>	
+				
+                </tbody>				
+				<table  width="100%" border="1" >
+				<tr>			             				
+                    <td style="font-size:20px;" width="70%">Total</td>
+					<td style="font-size:20px;" align="center" width="20%"><?php echo $totalenrolment->total;?></td>					  						  						  						  						
+					<td style="font-size:20px;" align="center" width="10%"><?php echo number_format($tPercent,0);?></td>					  						  						  						  						
+					</tr>										
+				</table>
+                <?php else:?>
+					<p style="color:red;">No Gender Available.</p>
+                <?php endif?>
+			    </table>				
+		</td>		
+		</tr>
+		</table><br>
+	
+		<div align ="right">
+		    <a href="<?php echo base_url(); ?>registrar/analytics/reg_gender" class="btn btn-primary btn-sm" title="Print"><i class="fa fa-print"></i>Print</a>
+		    <!--<a href="<?php echo base_url(); ?>analytics/pdf" class="btn btn-primary btn-sm">Refresh</a>-->
+		</div>	
+		<br>
+		<br>
+		
+	<!--End-->
+	<!--Start Table -->
+	<h4 style="color:blue"  class="page-header" style="border-bottom: 1px solid #004d0029">Distribution of Enrolment Data - Department</h4> 		
+	<table align="left" width="100%">
+		<tr>
+			<td width="50%" align="left">				
+				<div  id="dept_chart" style="width: 500px; height: 450px;"></div>
+			</td>
+			<td width="50%">			
+			<!--<label>Distribution of Total Enrolment by Department</label>-->
+			<table  align="left"  width="100%" border="1" class="sortable">		
+              <thead>			   				
+                <tr>				    
+                    <th bgcolor="#F2D7D5"style="font-size:20px;"width="70%">Department</th>
+					<th bgcolor="#F2D7D5"style="font-size:20px;"class="text-center" width="20%">Total</th>	
+					<th bgcolor="#F2D7D5"style="font-size:20px;"class="text-center" width="10%">%</th>	
+							
+                </tr>
+              </thead>
+              <tbody>
+             <?php if($dept_total):?>	
+				    <?php $tPercent=0;?>
+                    <?php foreach($dept_total as $dept):?>
+                    <tr style="padding:0px;LINE-HEIGHT:30px">	                   				
+                          <td style="font-size:20px;" width="70%"><?php echo $dept->department;?></td>
+						  <td style="font-size:20px;" align="center" width="20%"><?php echo $dept->total;?></td>	
+						  <td style="font-size:20px;" align="center" width="10%"><?php echo number_format(($dept->total/$totalenrolment->total)*100,0);?></td>	
+						  <?php $tPercent = $tPercent + ($dept->total/$totalenrolment->total)*100;?>
+					</tr>
+					<?php endforeach;?>	
+				
+                </tbody>
+				<table  align="left"  width="100%" border="1" >		
+					<tr>			             				
+                          <td style="font-size:20px;" width="70%">Total</td>
+						  <td style="font-size:20px;" align="center" width="20%"><?php echo $totalenrolment->total;?></td>					  						  						  						  						
+						  <td style="font-size:20px;" align="center" width="10%"><?php echo number_format($tPercent,0);?></td>					  						  						  						  						
+					</tr>	
+				</table>		
+                <?php else:?>
+					<p style="color:red;">No Gender Available.</p>
+                <?php endif?>
+			    </table>				
+		</td>		
+		</tr>
+	</table><br>
+	<!--End-->
+		<div align ="right">
+		    <a href="<?php echo base_url(); ?>registrar/analytics/reg_dept" class="btn btn-primary btn-sm" title="Print"><i class="fa fa-print"></i>Print</a>
+		    <!--<a href="<?php echo base_url(); ?>analytics/pdf" class="btn btn-primary btn-sm">Refresh</a>-->
+		</div>	
+		<br>
+		<br>
+
+	<!--Start Table -->
+	<h4 style="color:blue"  class="page-header" style="border-bottom: 1px solid #004d0029">Distribution of Enrolment Data - Religion</h4> 		
+	<table align="left" width="100%">
+		<tr>
+			<td width="50%" align="left">				
+				<div  id="religion_chart" style="width: 500px; height: 300px;"></div>								
+			</td>
+			<td width="50%">			
+			<!--<label>Distribution of Total Enrolment by Religion</label>-->
+			    <table  align="left" width="100%" border="1" class="sortable">
+                <thead>			   				
+					<tr>
+									
+						<th bgcolor="#F2D7D5"style="font-size:20px;"width="70%">Religion</th>
+						<th bgcolor="#F2D7D5"style="font-size:20px;"class="text-center" width="20%">Total</th>	
+						<th bgcolor="#F2D7D5"style="font-size:20px;"class="text-center" width="10%">%</th>	
+						
+					</tr>
+				</thead>
+				<tbody>
+				<?php if($religions):?>	
+			    <?php $tPercent=0;?>				
+                    <?php foreach($religions as $religion):?>
+                    <tr style="padding:0px;LINE-HEIGHT:30px">	
+                         			
+                          <td style="font-size:20px;" width="70%"><?php echo $religion->religion?></td>
+						  <td style="font-size:20px;" align="center" width="20%"><?php echo $religion->Total?></td>						  
+						  <td style="font-size:20px;" align="center" width="10%"><?php echo number_format(($religion->Total/$totalenrolment->total)*100,0);?></td>					  						  						  						  
+						  <?php $tPercent = $tPercent + ($religion->Total/$totalenrolment->total)*100;?>
+
+					</tr>
+					<?php endforeach;?>	
+				
+                </tbody>
+				<table  align="left" width="100%" border="1">
+					<tr>			            			
+                          <td style="font-size:20px;" width="70%">Total</td>
+						  <td style="font-size:20px;" align="center" width="20%"><?php echo $totalenrolment->total;?></td>					  						  						  						  						
+						  <td style="font-size:20px;" align="center" width="10%"><?php echo number_format($tPercent,00);?></td>					  						  						  						  						
+					</tr>	
+				</table>				
+                <?php else:?>
+					<p style="color:red;">No Religion Available.</p>
+                <?php endif?>							
+            </table>						
+		</td>		
+		</tr>
+	</table><br>
+	<!--End-->
+		<div align ="right">
+		    <a href="<?php echo base_url(); ?>registrar/analytics/reg_religion" class="btn btn-primary btn-sm" title="Print"><i class="fa fa-print"></i>Print</a>
+		    <!--<a href="<?php echo base_url(); ?>analytics/pdf" class="btn btn-primary btn-sm">Refresh</a>-->
+		</div>	
+		<br>
+		<br>
+
+
+	<!--Start Table -->
+	<h4 style="color:blue"  class="page-header" style="border-bottom: 1px solid #004d0029">Distribution of Enrolemt Data - Type of School Last Attended</h4> 		 
+	<table align="left" width="100%">
+		<tr>
+			<td width="50%"align="left">				
+			 <div  id="stype_chart" style="width: 500px; height: 300px;"></div>					
+			</td>
+			<td width="50%">			
+			<!--<label>Distribution of Total Enrolment by Type of School</label>-->
+			<table  align="left" width="100%" border="1" class="sortable">		
+              <thead>			   				
+                <tr>
+				    
+                    <th bgcolor="#F2D7D5"style="font-size:20px;"width="70%">School Type</th>
+					<th bgcolor="#F2D7D5"style="font-size:20px;"class="text-center" width="20%">Total</th>	
+					<th bgcolor="#F2D7D5"style="font-size:20px;"class="text-center" width="10%">%</th>	
+							
+                </tr>
+              </thead>
+              <tbody>
+              <?php if($view_stype):?>	
+				    <?php $tPercent=0;?>			  
+                    <?php foreach($view_stype as $type):?>
+                    <tr style="padding:0px;LINE-HEIGHT:30px">	
+                         				
+                          <td style="font-size:20px;" width="70%"><?php echo $type->stype;?></td>
+						  <td style="font-size:20px;" align="center" width="20%"><?php echo $type->total;?></td>					  						  						  						  
+						  <td style="font-size:20px;" align="center" width="10%"><?php echo number_format(($type->total/$totalenrolment->total)*100,0);?></td>					  						  						  						  
+						  <?php $tPercent = $tPercent + ($type->total/$totalenrolment->total)*100;?>
+
+					</tr>
+					<?php endforeach;?>	
+				
+                </tbody>
+				<table  align="left" width="100%" border="1">
+					<tr>			             				
+                          <td style="font-size:20px;" width="70%">Total</td>
+						  <td style="font-size:20px;" align="center" width="20%"><?php echo $totalenrolment->total;?></td>					  						  						  						  						
+						  <td style="font-size:20px;" align="center" width="10%"><?php echo number_format($tPercent,0);?></td>					  						  						  						  						
+					</tr>					
+				</table>
+                <?php else:?>
+					<p style="color:red;">No ESC Grantee Available.</p>
+                <?php endif?>
+			    </table>		
+		</td>		
+		</tr>
+	</table><br>
+	<!--End-->
+		<div align ="right">
+		    <a href="<?php echo base_url(); ?>registrar/analytics/reg_school" class="btn btn-primary btn-sm" title="Print"><i class="fa fa-print"></i>Print</a>
+		    <!--<a href="<?php echo base_url(); ?>analytics/pdf" class="btn btn-primary btn-sm">Refresh</a>-->
+		</div>	
+		<br>
+		<br>
+
+	<!--Start Table -->
+	<h4 style="color:blue"  class="page-header" style="border-bottom: 1px solid #004d0029">Distribution of Enrolment Data - Status</h4> 		
+	<table align="left" width="100%">
+		<tr>
+			<td width="50%"align="left">				
+				<div  id="status_chart" style="width: 500px; height: 300px;"></div>							
+			</td>
+			<td width="50%">			
+				<!--<label>Distribution of Total Enrolment by Status</label>-->
+			    <table  align="left" width="100%" border="1" class="table table-striped">		
+                <thead>			   				
+					<tr>
+									
+						<th bgcolor="#F2D7D5"style="font-size:20px;" width="70%">Status</th>
+						<th bgcolor="#F2D7D5"style="font-size:20px;" class="text-center" width="20%">Total</th>	
+						<th bgcolor="#F2D7D5"style="font-size:20px;" class="text-center" width="10%">%</th>	
+						
+					</tr>
+				</thead>
+				<tbody>
+				<?php if($status):?>					
+ 				    <?php $tPercent=0;?>
+                   <?php foreach($status as $stat):?>
+                    <tr style="padding:0px;LINE-HEIGHT:25px">	
+                         			
+                          <td style="font-size:20px;" width="70%"><?php echo $stat->status?></td>
+						  <td style="font-size:20px;" align="center" width="20%"><?php echo $stat->Total;?></td>	
+						  <td style="font-size:20px;" align="center" width="10%"><?php echo number_format(($stat->Total/$totalenrolment->total)*100,0);?></td>					  						  						  						  
+						  <?php $tPercent = $tPercent + ($stat->Total/$totalenrolment->total)*100;?>
+						  
+					</tr>
+					<?php endforeach;?>	
+					<tr>
+			            			
+                          <td style="font-size:20px;" width="70%">Total</td>
+						  <td style="font-size:20px;" align="center" width="20%"><?php echo $totalenrolment->total;?></td>					  						  						  						  						
+						  <td style="font-size:20px;" align="center" width="10%"><?php echo number_format($tPercent,0);?></td>					  						  						  						  						
+
+					</tr>					
+                </tbody>
+                <?php else:?>
+					<p style="color:red;">No Status Available.</p>
+                <?php endif?>							
+            </table>			
+		</td>		
+		</tr>
+	</table><br>
+		<div align ="right">
+		    <a href="<?php echo base_url(); ?>registrar/analytics/reg_status" class="btn btn-primary btn-sm" title="Print"><i class="fa fa-print"></i>Print</a>
+		    <!--<a href="<?php echo base_url(); ?>analytics/pdf" class="btn btn-primary btn-sm">Refresh</a>-->
+		</div>	
+		<br>
+		<br>	
+	<!--End-->
+	<h4 style="color:blue"  class="page-header" style="border-bottom: 1px solid #004d0029">Distribution of Enrolment  - Grade/Section</h4> 				
+	<table align="left" width="100%" >
+		<tr>
+			<td width="50%"align="left">				
+				<div  id="section_chart" style="width: 500px; height: 850px;"></div>							
+			</td>
+			<td width="50%">
+			<!--Start Table -->
+			<!--<label>'Distribution of Total Enrolment by Grade/Section</label>					-->
+				<table  id="indextable"  align="left"  width="100%;"  border="1" class="sortable"> <!-- class="table table-striped table-hover">		-->
+				<thead>
+                <tr>
+					<th bgcolor="#F2D7D5"style="font-size:20px;"width="75%">Section</th>
+					<th bgcolor="#F2D7D5"style="font-size:20px;"class="text-center" width="15%">Total</th>
+					<th bgcolor="#F2D7D5"style="font-size:20px;"class="text-center" width="10%">%</th>
+								
+					<!--
+					<th style="font-size:20px;"width="75%"><a href="javascript:SortTableSection(0)" id="gs1">Section</th>
+					<th style="font-size:20px;"class="text-center" width="15%"><a href="javascript:SortTableSection(2)" id="gs2">Total</th>
+					<th style="font-size:20px;"class="text-center" width="10%"><a href="javascript:SortTableSection(3)" id="gs3">%</th>
+					
+					<input class="text-center" id="vgs2" name="xEnergy" type="hidden" placeholder="0"  style="width:200px;font-size:22px"; value ="0" readonly />																	
+ 					<input class="text-center" id="vgs1" name="xEnergy" type="hidden" placeholder="0"  style="width:200px;font-size:22px"; value ="0" readonly />																	
+  					<input class="text-center" id="tbl" name="xEnergy" type="hidden" placeholder="0"  style="width:200px;font-size:22px"; value ="indextable" readonly />																	
+					-->
+				</tr>
+              </thead>
+              <tbody id="gradeBody">
+              <?php if($grades):?>	
+				    <?php $tPercent=0;?>			  
+                    <?php foreach($grades as $grade):?>
+                    <tr style="padding:0px;LINE-HEIGHT:25px">	
+        
+                          <td style="font-size:18px;" width="75%"><?php echo $grade->section;?></td>
+						  <td style="font-size:18px;" align="center" width="15%"><?php echo $grade->Total;?></td>					  						  						  					  
+						  <td style="font-size:18px;" align="center" width="10%"><?php echo number_format(($grade->Total/$totalenrolment->total)*100,0);?></td>					  						  						  					  
+						  <?php $tPercent= $tPercent + ($grade->Total/$totalenrolment->total)*100;?>
+					</tr>
+					<?php endforeach;?>										
+
+                </tbody>
+
+                <?php else:?>
+					<p style="color:red;">No Grade/Section Available.</p>
+                <?php endif?>
+				</td>
+				</tr>
+				</table>
+				<?php if($grades):?>
+				<table width="100%" border="1">
+					<tr>
+			             					
+                          <td style="font-size:20px;" width="75%">Total</td>
+						  <td style="font-size:20px;" align="center" width="15%"><?php echo $totalenrolment->total;?></td>					  						  						  						  						
+						  <td style="font-size:20px;" align="center" width="10%"><?php echo number_format($tPercent,0);?></td>					  						  						  						  						
+
+					</tr>					
+			</table>
+			<?php endif?>
+		<!--End Table-->
+		</td>		
+		</tr>
+	</table>
+	<br>
+			<div align ="right">
+		    <a href="<?php echo base_url(); ?>registrar/analytics/reg_section" class="btn btn-primary btn-sm" title="Print"><i class="fa fa-print"></i>Print</a>
+		    <!--<a href="<?php echo base_url(); ?>analytics/pdf" class="btn btn-primary btn-sm">Refresh</a>-->
+		</div>	
+		<br>
+		<br>	
+	<h4 style="color:blue"  class="page-header" style="border-bottom: 1px solid #004d0029">Distribution of Enrolemnet Data - Grade/Gender</h4> 				
+
+	<table  align="left" width="100%" >
+		<tr>
+		<td width="50%"align="left">		
+			<div  id="grade_gender_chart" style="width: 500px; height: 750px;"></div>					
+		</td>
+		<td width="50%">		
+		<!--Start Table -->
+	    <!--<label>Distribution of Total Enrolment by Grade and Gender</label> -->
+		<table id="sort_gender" align="left" width="100%" border="1" class="sortable"> <!-- class="table table-striped">		-->
+              <thead>			   			
+                <tr>
+				
+					<th bgcolor="#F2D7D5"style="font-size:20px;" width="75%">Section</a></th>
+					<th bgcolor="#F2D7D5"style="font-size:20px;"class="text-center" width="15%">Male</a></th>
+					<th bgcolor="#F2D7D5"style="font-size:20px;"class="text-center" width="10%">Female</a></th>
+					<!--
+				
+					<th style="font-size:20px;" width="75%"><a href="javascript:SortTable(0,'T');">Section</a></th>
+					<th style="font-size:20px;"class="text-center" width="15%"><a href="javascript:SortTable(1,'T');">Male</a></th>
+					<th style="font-size:20px;"class="text-center" width="10%"><a href="javascript:SortTable(2,'T');">Female</a></th>
+					-->
+					<!--<th><a href="javascript:SortTable(3,'D','mdy');">Review Date</a></th>-->					
+				   <!--
+                    <th width="60%">Sectiom</th>
+					<th class="text-center" width="20%">Male</th>					
+					<th class="text-center" width="20%">Female</th>										                    
+				   --> 	
+                </tr>
+              </thead>
+              <tbody>
+              <?php if($grade_gender):?>	
+				    <?php $tPercent=0;?>			  
+                    <?php foreach($grade_gender as $gragen):?>
+                    <tr style="padding:0px;LINE-HEIGHT:25px">	
+                       			
+                          <td style="font-size:18px;" width="60%"><?php echo $gragen->section?></td>
+						  <td style="font-size:18px;" align="center" width="20%"><?php echo $gragen->Male;?></td>					  						  						  						  
+						  <td style="font-size:18px;" align="center" width="20%"><?php echo $gragen->female;?></td>					  						  						  						  		
+	                  </tr>
+						<?php endforeach;?>	
+										
+                </tbody>
+                <?php else:?>
+					<p style="color:red;">No Total Status Available.</p>
+                <?php endif?>
+				</td>
+				</tr>
+            </table>		
+		<!--End Table-->			
+		</td>		
+	  </tr>
+	</table><br>	
+			<div align ="right">
+		    <a href="<?php echo base_url(); ?>registrar/analytics/reg_grade_gender" class="btn btn-primary btn-sm" title="Print"><i class="fa fa-print"></i>Print</a>
+		    <!--<a href="<?php echo base_url(); ?>analytics/pdf" class="btn btn-primary btn-sm">Refresh</a>-->
+		</div>	
+		<br>
+		<br>	
+	<!--Start Table -->
+	<h4 style="color:blue"  class="page-header" style="border-bottom: 1px solid #004d0029">Enrolment Requirements - GMRC Submission</h4> 		
+	<table width="100%">
+		<tr>
+			<td width="50%"align="left">				
+			 <div  id="gmrc_chart" style="width: 500px; height: 300px;"></div>					
+			</td>
+			<td width="50%">			
+			<!--<label>Distribution of Total Enrolment by GMRC Submission</label>-->
+			<table  align="left" width="100%" border="1" class="sortable">
+              <thead>			   				
+                <tr>
+				    
+                    <th bgcolor="#F2D7D5"style="font-size:20px;"width="70%">GMRC</th>
+					<th bgcolor="#F2D7D5"style="font-size:20px;"class="text-center" width="20%">Total</th>	
+					<th bgcolor="#F2D7D5"style="font-size:20px;"class="text-center" width="10%">%</th>	
+							
+                </tr>
+              </thead>
+              <tbody>
+              <?php if($view_gmrc):?>					
+ 				<?php $tPercent=0;?>
+				<?php foreach($view_gmrc as $item):?>
+                    <tr style="padding:0px;LINE-HEIGHT:30px">	
+                       <?php if($item->gmrc=='NA'):?>  				
+                          <td style="font-size:20px;" width="70%">Not Applicable</td>
+                      <?php elseif($item->gmrc=='Yes'):?>  				
+                          <td style="font-size:20px;" width="70%">GMRC Submitted</td>
+                      <?php else:?>  				
+                          <td style="font-size:20px;" width="70%">GMRC Not Submitted</td>
+					   <?php endif?>
+							<td style="font-size:20px;" align="center" width="20%"><?php echo $item->total;?></td>	
+						  <td style="font-size:20px;" align="center" width="10%"><?php echo number_format(($item->total/$totalenrolment->total)*100,0);?></td>					  						  						  					  
+						  <?php $tPercent= $tPercent + ($item->total/$totalenrolment->total)*100;?>
+						  
+					</tr>
+					<?php endforeach;?>	
+					
+                </tbody>
+				<table  align="left" width="100%" border="1">
+					<tr>			             				
+                          <td style="font-size:20px;" width="70%">Total</td>
+						  <td style="font-size:20px;" align="center" width="20%"><?php echo $totalenrolment->total;?></td>					  						  						  						  						
+						  <td style="font-size:20px;" align="center" width="10%"><?php echo number_format($tPercent,0);?></td>					  						  						  						  						
+					</tr>				
+				 </table>
+                <?php else:?>
+					<p style="color:red;">No GMRC Submission Available.</p>
+                <?php endif?>
+			    </table>			
+		</td>		
+		</tr>
+	</table><br>
+	<!--End-->
+			<div align ="right">
+		    <a href="<?php echo base_url(); ?>registrar/analytics/reg_gmrc" class="btn btn-primary btn-sm" title="Print"><i class="fa fa-print"></i>Print</a>
+		    <!--<a href="<?php echo base_url(); ?>analytics/pdf" class="btn btn-primary btn-sm">Refresh</a>-->
+		</div>	
+		<br>
+		<br>	
+	<!--Start Table -->
+	<h4 style="color:blue"  class="page-header" style="border-bottom: 1px solid #004d0029">Enrolment Requirements - Form 138 </h4> 		
+	<table width="100%">
+		<tr>
+			<td width="50%"align="left">				
+			<div  id="form138_chart" style="width: 500px; height: 300px;"></div>							
+			</td>
+			<td width="50%">			
+				<!--<label>Distribution of Total Enrolment by Form 138 Submssion</label>-->
+			    <table  align="left" width="100%" border="1" class="table-hover;sortable">		
+                <thead>			   				
+					<tr>
+									
+						<th bgcolor="#F2D7D5"style="font-size:20px;"width="70%">Form 138</th>
+						<th bgcolor="#F2D7D5"style="font-size:20px;"class="text-center" width="20%">Total</th>					                   
+						<th bgcolor="#F2D7D5"style="font-size:20px;"class="text-center" width="10%">%</th>	
+
+					</tr>
+				</thead>
+				<tbody>
+				<?php if($view_form138):?>	
+				    <?php $tPercent=0;?>				
+                    <?php foreach($view_form138 as $item):?>
+                    <tr style="padding:0px;LINE-HEIGHT:30px">	
+                         <?php if($item->form138=='NA'):?>			
+                          <td style="font-size:20px;" width="70%">Not Applicable</td>
+                         <?php elseif($item->form138=='Yes'):?>			
+                          <td style="font-size:20px;" width="70%">Form138 Submitted</td>
+                         <?php else:?>			
+                          <td style="font-size:20px;" width="70%">Form138 Not Submitted</td>
+						 <?php endif?>
+						  <td style="font-size:20px;" align="center" width="20%"><?php echo $item->total;?></td>					  						  						  						  
+						  <td style="font-size:20px;" align="center" width="10%"><?php echo number_format(($item->total/$totalenrolment->total)*100,0);?></td>					  						  						  					  
+						  <?php $tPercent= $tPercent + ($item->total/$totalenrolment->total)*100;?>
+
+					</tr>
+					<?php endforeach;?>	
+				
+                </tbody>
+				<table  align="left" width="100%" border="1">
+					<tr>	            			
+                         <td style="font-size:20px;" width="70%">Total</td>
+						 <td style="font-size:20px;" align="center" width="20%"><?php echo $totalenrolment->total;?></td>					  						  						  						  						
+						 <td style="font-size:20px;" align="center" width="10%"><?php echo number_format($tPercent,0);?></td>					  						  						  						  						
+					</tr>	
+				</table>
+                <?php else:?>
+					<p style="color:red;">No Form 138 Available.</p>
+                <?php endif?>							
+            </table>			
+		</td>		
+		</tr>
+	</table><br>
+	<!--End-->
+			<div align ="right">
+		    <a href="<?php echo base_url(); ?>registrar/analytics/reg_form138" class="btn btn-primary btn-sm" title="Print"><i class="fa fa-print"></i>Print</a>
+		    <!--<a href="<?php echo base_url(); ?>analytics/pdf" class="btn btn-primary btn-sm">Refresh</a>-->
+		</div>	
+		<br>
+		<br>	
+	<!--Start Table -->
+	<h4 style="color:blue"  class="page-header" style="border-bottom: 1px solid #004d0029">Enrolment Requirements - NCAE</h4> 		
+	<table width="100%">
+		<tr>
+			<td width="50%"align="left">				
+			<div  id="ncae_chart" style="width: 500px; height: 300px;"></div>						
+			</td>
+			<td width="50%">			
+			<!--<label>Distribution of Total Enrolment by Type of NCAE Submission</label>-->
+			<table  align="left" width="100%" border="1" class="sortable">	
+              <thead>			   				
+                <tr>
+				    
+                    <th bgcolor="#F2D7D5"style="font-size:20px;"width="70%">NCAE</th>
+					<th bgcolor="#F2D7D5"style="font-size:20px;"class="text-center" width="20%">Total</th>	
+					<th bgcolor="#F2D7D5"style="font-size:20px;"class="text-center" width="10%">%</th>	
+							
+                </tr>
+              </thead>
+              <tbody>
+              <?php if($view_ncae):?>	
+				    <?php $tPercent=0;?>			  
+                    <?php foreach($view_ncae as $type):?>
+                    <tr style="padding:0px;LINE-HEIGHT:30px">	
+                       <?php if($type->ncae=='NA'):?>  				
+                          <td style="font-size:20px;" width="70%">Not Applicable</td>
+                       <?php elseif($type->ncae=='Yes'):?>  				
+                          <td style="font-size:20px;" width="70%">NCAE Submitted</td>
+                       <?php else:?>  				
+                          <td style="font-size:20px;" width="70%">NCAE Not Submitted</td>
+					    <?php endif?>
+
+
+						  <td style="font-size:20px;" align="center" width="20%"><?php echo $type->total;?></td>					  						  						  						  
+						  <td style="font-size:20px;" align="center" width="10%"><?php echo number_format(($type->total/$totalenrolment->total)*100,0);?></td>					  						  						  					  
+						  <?php $tPercent= $tPercent + ($type->total/$totalenrolment->total)*100;?>
+
+					</tr>
+					<?php endforeach;?>	
+
+				
+                </tbody>
+				<table  align="left" width="100%" border="1">
+					<tr>
+			             				
+                          <td style="font-size:20px;" width="70%">Total</td>
+						  <td style="font-size:20px;" align="center" width="20%"><?php echo $totalenrolment->total;?></td>					  						  						  						  						
+						  <td style="font-size:20px;" align="center" width="10%"><?php echo number_format($tPercent,0);?></td>					  						  						  						  						
+
+					</tr>	
+				</table>
+				
+                <?php else:?>
+					<p style="color:red;">No NCAE Submission Available.</p>
+                <?php endif?>
+			    </table>			
+		</td>		
+		</tr>
+	</table><br>
+	<!--End-->
+
+
+	<!--Start Table -->
+	<h4 style="color:blue"  class="page-header" style="border-bottom: 1px solid #004d0029">Enrolment Requirements - JHS Completion Certificate</h4> 		
+	<table width="100%">
+		<tr>
+			<td width="50%"align="left">				
+			<div  id="junior_chart" style="width: 500px; height: 300px;"></div>								
+			</td>
+			<td width="50%">			
+				<<!--label>Distribution of Total Enrolment by JS Completion</label>-->
+			    <table  align="left" width="100%" border="1"  class="sortable">		
+                <thead>			   				
+					<tr>
+									
+						<th bgcolor="#F2D7D5"style="font-size:20px;"width="70%">JS Completion</th>
+						<th bgcolor="#F2D7D5"style="font-size:20px;"class="text-center" width="20%">Total</th>					                   
+						<th bgcolor="#F2D7D5"style="font-size:20px;"class="text-center" width="10%">%</th>	
+
+					</tr>
+				</thead>
+				<tbody>
+				<?php if($view_junior):?>	
+				    <?php $tPercent=0;?>				
+                    <?php foreach($view_junior as $item):?>
+                    <tr style="padding:0px;LINE-HEIGHT:30px">	
+                         <?php if($item->junior=='NA'):?>			
+                          <td style="font-size:20px;" width="70%">Not Applicable</td>
+                         <?php elseif($item->junior=='Yes'):?>			
+                          <td style="font-size:20px;" width="70%">JHS Certificate Submitted</td>
+                         <?php else:?>			
+                          <td style="font-size:20px;" width="70%">JHS Certificate Not Submitted</td>
+						 <?php endif?>
+
+
+						  <td style="font-size:20px;" align="center" width="20%"><?php echo $item->total;?></td>					  						  						  						  
+						  <td style="font-size:20px;" align="center" width="10%"><?php echo number_format(($item->total/$totalenrolment->total)*100,0);?></td>					  						  						  					  
+						  <?php $tPercent= $tPercent + ($item->total/$totalenrolment->total)*100;?>
+
+					</tr>
+					<?php endforeach;?>	
+					<tr>
+			            			
+                          <td style="font-size:20px;" width="70%">Total</td>
+						  <td style="font-size:20px;" align="center" width="20%"><?php echo $totalenrolment->total;?></td>					  						  						  						  						
+						  <td style="font-size:20px;" align="center" width="10%"><?php echo number_format($tPercent,0);?></td>					  						  						  						  						
+
+					</tr>					
+                </tbody>
+				<table  align="left" width="100%" border="1">
+					<tr>
+			            			
+                          <td style="font-size:20px;" width="70%">Total</td>
+						  <td style="font-size:20px;" align="center" width="20%"><?php echo $totalenrolment->total;?></td>					  						  						  						  						
+						  <td style="font-size:20px;" align="center" width="10%"><?php echo number_format($tPercent,0);?></td>					  						  						  						  						
+
+					</tr>	
+				</table>
+                <?php else:?>
+					<p style="color:red;">No JS Completion Submission Available.</p>
+                <?php endif?>							
+            </table>			
+		</td>		
+		</tr>
+	</table><br>
+	<!--End-->
+
+	<!--Start Table -->
+	<h4 style="color:blue"  class="page-header" style="border-bottom: 1px solid #004d0029">Scholarships, Granats and Discounts  - ESC Grantee Certificate Submission</h4> 		
+	<table width="100%">
+		<tr>
+			<td width="50%"align="left">				
+			 <div  id="esc_chart" style="width: 500px; height: 300px;"></div>						
+			</td>
+			<td width="50%">			
+			<!--<label>Distribution of Total Enrolment by ESC Grantee</label>-->
+			<table  align="left" width="100%" border="1" class="sortable">	
+              <thead>			   				
+                <tr>
+				    
+                    <th bgcolor="#F2D7D5"style="font-size:20px;"width="70%">ESC Grantee</th>
+					<th bgcolor="#F2D7D5"style="font-size:20px;"class="text-center" width="20%">Total</th>	
+					<th bgcolor="#F2D7D5"style="font-size:20px;"class="text-center" width="10%">%</th>	
+							
+                </tr>
+              </thead>
+              <tbody>
+              <?php if($view_esc):?>
+				    <?php $tPercent=0;?>			  
+                    <?php foreach($view_esc as $esc):?>
+                    <tr style="padding:0px;LINE-HEIGHT:30px">	
+      
+						<?php if($esc->esc=='NA'):?>
+                          <td style="font-size:20px;" width="70%">Not Applicable</td>
+						<?php elseif($esc->esc=='Yes'):?>
+                          <td style="font-size:20px;" width="70%">ESC Grantee</td>
+						<?php else:?>
+                          <td style="font-size:20px;" width="70%">Not ESC Grantee</td>
+						<?php endif?>
+
+						  <td style="font-size:20px;" align="center" width="20%"><?php echo $esc->total;?></td>					  						  						  						  
+						  <td style="font-size:20px;" align="center" width="10%"><?php echo number_format(($esc->total/$totalenrolment->total)*100,0);?></td>					  						  						  					  
+						  <?php $tPercent= $tPercent + ($esc->total/$totalenrolment->total)*100;?>
+
+					</tr>
+					<?php endforeach;?>	
+					<tr>
+			             				
+                          <td style="font-size:20px;" width="70%">Total</td>
+						  <td style="font-size:20px;" align="center" width="20%"><?php echo $totalenrolment->total;?></td>					  						  						  						  						
+						  <td style="font-size:20px;" align="center" width="10%"><?php echo number_format($tPercent,0);?></td>					  						  						  						  						
+
+					</tr>					
+                </tbody>
+				<table  align="left" width="100%" border="1">
+					<tr>
+			             				
+                          <td style="font-size:20px;" width="70%">Total</td>
+						  <td style="font-size:20px;" align="center" width="20%"><?php echo $totalenrolment->total;?></td>					  						  						  						  						
+						  <td style="font-size:20px;" align="center" width="10%"><?php echo number_format($tPercent,0);?></td>					  						  						  						  						
+
+					</tr>						
+				</table>
+                <?php else:?>
+					<p style="color:red;">No ESC Grantee Available.</p>
+                <?php endif?>
+			    </table>			
+		</td>		
+		</tr>
+	</table><br>
+	<!--End-->
+
+	<!--Start Table -->
+	<h4 style="color:blue"  class="page-header" style="border-bottom: 1px solid #004d0029">Scholarships, Grants and Discounts  - Voucher Certificate Submission</h4> 		
+	<table width="100%">
+		<tr>
+			<td width="50%"align="left">				
+			<div  id="voucher_chart" style="width: 500px; height: 300px;"></div>							
+			</td>
+			<td width="50%">			
+				<!--<label>Distribution of Total Enrolment by Voucher</label>-->
+			    <table  align="left" width="100%" border="1" class="sortable">		
+                <thead>			   				
+					<tr>
+									
+						<th bgcolor="#F2D7D5"style="font-size:20px;"width="70%">Voucher Grantee</th>
+						<th bgcolor="#F2D7D5"style="font-size:20px;"class="text-center" width="20%">Total</th>					                   
+						<th bgcolor="#F2D7D5"style="font-size:20px;"class="text-center" width="10%">%</th>	
+
+					</tr>
+				</thead>
+				<tbody>
+				<?php if($view_voucher):?>
+				    <?php $tPercent=0;?>				
+                    <?php foreach($view_voucher as $item):?>
+                    <tr style="padding:0px;LINE-HEIGHT:30px">	
+                         <?php if ($item->voucher=='NA'):?>			
+                          <td style="font-size:20px;" width="70%">Not Applicable</td>
+						 <?php elseif($item->voucher=='Yes'):?>
+                          <td style="font-size:20px;" width="70%">Vocuher Grantee</td>
+						 <?php else:?>
+                          <td style="font-size:20px;" width="70%">Not Vocuher Grantee</td>
+
+
+						 <?php endif?> 
+						  <td style="font-size:20px;" align="center" width="20%"><?php echo $item->total;?></td>					  						  						  						  
+						  <td style="font-size:20px;" align="center" width="10%"><?php echo number_format(($item->total/$totalenrolment->total)*100,0);?></td>					  						  						  					  
+						  <?php $tPercent= $tPercent + ($item->total/$totalenrolment->total)*100;?>
+
+					</tr>
+					<?php endforeach;?>	
+					<tr>
+			            			
+                          <td style="font-size:20px;" width="70%">Total</td>
+						  <td style="font-size:20px;" align="center" width="20%"><?php echo $totalenrolment->total;?></td>					  						  						  						  						
+						  <td style="font-size:20px;" align="center" width="10%"><?php echo number_format($tPercent,0);?></td>					  						  						  						  						
+
+					</tr>					
+                </tbody>
+				<table  align="left" width="100%" border="1">
+					<tr>
+			            			
+                          <td style="font-size:20px;" width="70%">Total</td>
+						  <td style="font-size:20px;" align="center" width="20%"><?php echo $totalenrolment->total;?></td>					  						  						  						  						
+						  <td style="font-size:20px;" align="center" width="10%"><?php echo number_format($tPercent,0);?></td>					  						  						  						  						
+
+					</tr>						
+				
+				</table>
+                <?php else:?>
+					<p style="color:red;">No Voucher Available.</p>
+                <?php endif?>							
+            </table>			
+		</td>		
+		</tr>
+	</table><br>
+	<!--End-->
+
+	<!--Start Table -->
+	<h4 style="color:blue"  class="page-header" style="border-bottom: 1px solid #004d0029">Scholarships, Grants and Discounts  - Employee Dependent</h4> 		
+	<table width="100%">
+		<tr>
+			<td width="50%"align="left">				
+			 <div  id="dependent_chart" style="width: 500px; height: 300px;"></div>				
+			</td>
+			<td width="50%">			
+			<!--<label>Distribution of Total Enrolment by Employee Dependent</label>-->
+			<table  align="left"  width="100%" border="1" class="sortable">		
+              <thead>			   				
+                <tr>
+				    
+                    <th bgcolor="#F2D7D5"style="font-size:20px;"width="70%">Employee Dependent</th>
+					<th bgcolor="#F2D7D5"style="font-size:20px;"class="text-center" width="20%">Total</th>	
+					<th bgcolor="#F2D7D5"style="font-size:20px;"class="text-center" width="10%">%</th>	
+							
+                </tr>
+              </thead>
+              <tbody>
+             <?php if($view_dependent):?>
+				    <?php $tPercent=0;?>			 
+				   
+                    <?php foreach($view_dependent as $item):?>
+                    <tr style="padding:0px;LINE-HEIGHT:30px">
+						  <?php if($item->dependent=='Yes'):?> 		
+                          <td style="font-size:20px;" width="70%">Dependent</td>
+				          <?php else:?>
+                         <td style="font-size:20px;" width="70%">Not Dependent</td>
+						  
+						  <?php endif?>
+
+						  <td style="font-size:20px;" align="center" width="20%"><?php echo $item->total;?></td>	
+						  <td style="font-size:20px;" align="center" width="10%"><?php echo number_format(($item->total/$totalenrolment->total)*100,0);?></td>	
+						  <?php $tPercent = $tPercent + ($item->total/$totalenrolment->total)*100;?>
+					</tr>
+					<?php endforeach;?>	
+				
+                </tbody>
+				<table  align="left"  width="100%" border="1">
+					<tr>
+			             				
+                          <td style="font-size:20px;" width="50%">Total</td>
+						  <td style="font-size:20px;" align="center" width="15%"><?php echo $totalenrolment->total;?></td>					  						  						  						  						
+						  <td style="font-size:20px;" align="center" width="10%"><?php echo number_format($tPercent,0);?></td>					  						  						  						  						
+
+					</tr>	
+				</table>
+                <?php else:?>
+					<p style="color:red;">No Employee Dependent Available.</p>
+                <?php endif?>
+			    </table>			
+		</td>		
+		</tr>
+	</table><br>
+	<!--End-->
+
+	<!--Start Table -->
+	<h4 style="color:blue"  class="page-header" style="border-bottom: 1px solid #004d0029">Scholarships, Grants and Discounts - Reconciler Scholarship</h4> 		
+	<table width="100%">
+		<tr>
+			<td width="50%"align="left">				
+			<div  id="reconciler_chart" style="width: 500px; height: 300px;"></div>							
+			</td>
+			<td width="50%">			
+				<!--<label>Distribution of Total Enrolment by Reconciler Scholarship</label>-->
+			    <table  align="left" width="100%" border="1" class="sortable">	
+                <thead>			   				
+					<tr>
+									
+						<th bgcolor="#F2D7D5"style="font-size:20px;"width="70%">Reconciler</th>
+						<th bgcolor="#F2D7D5"style="font-size:20px;"class="text-center" width="20%">Total</th>	
+						<th bgcolor="#F2D7D5"style="font-size:20px;"class="text-center" width="10%">%</th>	
+						
+					</tr>
+				</thead>
+				<tbody>
+				<?php if($view_reconciler):?>
+				    <?php $tPercent=0;?>				
+			   				
+                    <?php foreach($view_reconciler as $item):?>
+                    <tr style="padding:0px;LINE-HEIGHT:30px">	
+                         <?php if($item->reconciler=='Yes'):?>			
+                          <td style="font-size:20px;" width="70%">Scholar</td>
+						 <?php else:?> 
+	                     <td style="font-size:20px;" width="70%">Not Scholar</td>
+						  
+						  <?php endif?>
+						  <td style="font-size:20px;" align="center" width="20%"><?php echo $item->total?></td>						  
+						  <td style="font-size:20px;" align="center" width="10%"><?php echo number_format(($item->total/$totalenrolment->total)*100,0);?></td>					  						  						  						  
+						  <?php $tPercent = $tPercent + ($item->total/$totalenrolment->total)*100;?>
+
+					</tr>
+					<?php endforeach;?>	
+				
+                </tbody>
+				<table  align="left"  width="100%" border="1">
+					<tr>
+			            			
+                          <td style="font-size:20px;" width="70%">Total</td>
+						  <td style="font-size:20px;" align="center" width="20%"><?php echo $totalenrolment->total;?></td>					  						  						  						  						
+						  <td style="font-size:20px;" align="center" width="10%"><?php echo number_format($tPercent,0);?></td>					  						  						  						  						
+
+					</tr>	
+				</table>
+ 
+                <?php else:?>
+					<p style="color:red;">No Reconciler Scholarship Available.</p>
+                <?php endif?>							
+            </table>			
+		</td>		
+		</tr>
+	</table><br>
+	<!--End-->
+
+	<!--Start Table -->
+	<h4 style="color:blue"  class="page-header" style="border-bottom: 1px solid #004d0029">Scholarships, Grants and Discounts - Honor Students</h4> 		
+	<table width="100%">
+		<tr>
+			<td width="50%"align="left">				
+			 <div  id="honor_chart" style="width: 500px; height: 300px;"></div>					
+			</td>
+			<td width="50%">			
+			<!--<label>Distribution of Total Enrolment by Honor Grant</label>-->
+			<table  align="left" width="100%" border="1" class="sortable">		
+              <thead>			   				
+                <tr>
+				    
+                    <th bgcolor="#F2D7D5"style="font-size:20px;"width="70%">Honor</th>
+					<th bgcolor="#F2D7D5"style="font-size:20px;"class="text-center" width="20%">Total</th>	
+					<th bgcolor="#F2D7D5"style="font-size:20px;"class="text-center" width="10%">%</th>	
+							
+                </tr>
+              </thead>
+              <tbody>
+              <?php if($view_honor):?>
+				    <?php $tPercent=0;?>			  
+                    <?php foreach($view_honor as $type):?>
+                    <tr style="padding:0px;LINE-HEIGHT:30px">	
+                         				
+                          <td style="font-size:20px;" width="70%"><?php echo $type->honor;?></td>
+						  <td style="font-size:20px;" align="center" width="20%"><?php echo $type->total;?></td>					  						  						  						  
+						  <td style="font-size:20px;" align="center" width="10%"><?php echo number_format(($type->total/$totalenrolment->total)*100,0);?></td>					  						  						  					  
+						  <?php $tPercent= $tPercent + ($type->total/$totalenrolment->total)*100;?>
+
+					</tr>
+					<?php endforeach;?>	
+				
+                </tbody>
+				<table  align="left"  width="100%" border="1">
+					<tr>
+			             				
+                          <td style="font-size:20px;" width="70%">Total</td>
+						  <td style="font-size:20px;" align="center" width="20%"><?php echo $totalenrolment->total;?></td>					  						  						  						  						
+						  <td style="font-size:20px;" align="center" width="10%"><?php echo number_format($tPercent,0);?></td>					  						  						  						  						
+
+					</tr>	
+				</table>
+ 
+                <?php else:?>
+					<p style="color:red;">No Reconciler Scholarship Grant Available.</p>
+                <?php endif?>
+			    </table>			
+		</td>		
+		</tr>
+	</table><br>
+	<!--End-->
+
+
+	<!--Start Table -->
+	<h4 style="color:blue"  class="page-header" style="border-bottom: 1px solid #004d0029">Scholarships, Grants and Discounts - Brother/Sister</h4> 		
+	<table width="100%">
+		<tr>
+			<td width="50%"align="left">				
+			<div  id="brother_chart" style="width: 500px; height: 300px;"></div>								
+			</td>
+			<td width="50%">			
+				<!--<label>Distribution of Total Enrolment by Brother/Sister Grant</label>-->
+			    <table  align="left" width="100%" border="1" class="sortable">		
+                <thead>			   				
+					<tr>
+									
+						<th bgcolor="#F2D7D5"style="font-size:20px;"width="70%">Brother/Sister</th>
+						<th bgcolor="#F2D7D5"style="font-size:20px;"class="text-center" width="20%">Total</th>	
+						<th bgcolor="#F2D7D5"style="font-size:20px;"class="text-center" width="10%">%</th>	
+						
+					</tr>
+				</thead>
+				<tbody>
+				<?php if($view_brother):?>
+				    <?php $tPercent=0;?>				
+                    <?php foreach($view_brother as $item):?>
+                    <tr style="padding:0px;LINE-HEIGHT:30px">	
+                         <?php if($item->brother=='1'):?>			
+                          <td style="font-size:20px;" width="70%">First Child</td>
+						 <?php elseif($item->brother=='2'):?>
+                          <td style="font-size:20px;" width="70%">Second Child</td>
+						 <?php elseif($item->brother=='3'):?>
+                         <td style="font-size:20px;" width="70%">Third Child</td>
+						 <?php else:?>
+                         <td style="font-size:20px;" width="70%">Fourth Child</td>
+						 
+						 <?php endif?>
+
+						 
+						  <td style="font-size:20px;" align="center" width="20%"><?php echo $item->total;?></td>					  						  						  						  
+						  <td style="font-size:20px;" align="center" width="10%"><?php echo number_format(($item->total/$totalenrolment->total)*100,0);?></td>					  						  						  					  
+						  <?php $tPercent= $tPercent + ($item->total/$totalenrolment->total)*100;?>
+
+					</tr>
+					<?php endforeach;?>	
+				
+                </tbody>
+				<table  align="left"  width="100%" border="1">
+					<tr>
+			            			
+                          <td style="font-size:20px;" width="70%">Total</td>
+						  <td style="font-size:20px;" align="center" width="20%"><?php echo $totalenrolment->total;?></td>					  						  						  						  						
+						  <td style="font-size:20px;" align="center" width="10%"><?php echo number_format($tPercent,0);?></td>					  						  						  						  						
+
+					</tr>	
+				</table>
+ 
+                <?php else:?>
+					<p style="color:red;">No Brother/Sister Grant Available.</p>
+                <?php endif?>							
+            </table>			
+		</td>		
+		</tr>
+	</table><br>
+	<!--End-->
+
+
+
+
+		
+		
+		
+
+<script src="<?php echo base_url();?>assets/tinymce/tinymce.min.js"></script>
+ <!--Department Total-->	
+<script type="text/javascript">
+      google.charts.load('current', {'packages':['corechart']});
+      google.charts.setOnLoadCallback(drawChart);
+      function drawChart() {     
+        var data = google.visualization.arrayToDataTable([
+          ['Department', 'Total'],
+			<?php foreach($dept_total as $dept):?>							
+				<?php echo "['".$dept->department."',".$dept->total."],"?>							
+		   <?php endforeach;?>  
+        ]);
+
+        var options = { title: '', pieHole: 0.4,
+		chartArea: {
+			top:80,
+			left:120,
+			bottom: 80
+        },
+		hAxis: {
+            title: "Department",
+			marginTop: '1'
+        },
+        vAxis: {
+            title: 'Student'
+        },};
+        var chart = new google.visualization.ColumnChart(document.getElementById('dept_chart'));
+		function selectHandler() {
+          var selectedItem = chart.getSelection()[0];
+          if (selectedItem) {
+            var topping = data.getValue(selectedItem.row, 0);
+            alert('The user selected ' + topping);
+          }
+        }
+
+        google.visualization.events.addListener(chart, 'select', selectHandler); 
+        chart.draw(data, options);
+      }
+</script>	
+	
+<!--Grade/Sectrion-->	
+<script type="text/javascript">
+      google.charts.load('current', {'packages':['corechart']});
+      google.charts.setOnLoadCallback(drawChart);
+      function drawChart() {     
+        var data = google.visualization.arrayToDataTable([
+          ['Section', 'Total'],
+			<?php foreach($grades as $grade):?>							
+				<?php echo "['".$grade->section."',".$grade->Total."],"?>							
+		   <?php endforeach;?>  
+        ]);
+
+        var options = { title: '', pieHole: 0.4,
+		chartArea: {
+			top:30,
+			left:150,
+			bottom: 80
+        },
+		hAxis: {
+            title: "Enrolled Students",
+			marginTop: '1'
+        },
+        vAxis: {
+            title: 'Section'
+        },};
+        var chart = new google.visualization.BarChart(document.getElementById('section_chart'));
+		function selectHandler() {
+          var selectedItem = chart.getSelection()[0];
+          if (selectedItem) {
+            var topping = data.getValue(selectedItem.row, 0);
+            alert('The user selected ' + topping);
+          }
+        }
+
+        google.visualization.events.addListener(chart, 'select', selectHandler); 
+        chart.draw(data, options);
+      }
+</script>	
+	
+
+
+<!--Gender -->	
+<script type="text/javascript">
+      google.charts.load('current', {'packages':['corechart']});
+      google.charts.setOnLoadCallback(drawChart);
+      function drawChart() {      
+        var data = google.visualization.arrayToDataTable([
+          ['Gender', 'Total'],		
+		  <?php foreach($genders as $gender):?>			
+				
+				<?php echo "['".$gender->Gender."',".$gender->Total."],"?>	
+		   <?php endforeach;?>		            
+        ]);
+        var options = { title: ''};
+        var chart = new google.visualization.PieChart(document.getElementById('gender_chart'));
+        chart.draw(data, options);
+      }
+</script>
+
+
+	
+<!--Religion-->	
+<script type="text/javascript">
+      google.charts.load('current', {'packages':['corechart']});
+      google.charts.setOnLoadCallback(drawChart);
+      function drawChart() {      
+        var data = google.visualization.arrayToDataTable([
+          ['Religion', 'Total'],		
+		  <?php foreach($religions as $rel):?>			
+				
+				<?php echo "['".$rel->religion."',".$rel->Total."],"?>	
+		   <?php endforeach;?>		            
+        ]);
+        var options = { title: ''};
+        var chart = new google.visualization.ColumnChart(document.getElementById('religion_chart'));
+        chart.draw(data, options);
+      }
+</script>	
+
+<!--Status-->				
+<script type="text/javascript">
+      google.charts.load('current', {'packages':['corechart']});
+      google.charts.setOnLoadCallback(drawChart);
+      function drawChart() {      
+        var data = google.visualization.arrayToDataTable([
+          ['Status', 'Total'],		
+		  <?php foreach($status as $stat):?>			
+				
+				<?php echo "['".$stat->status."',".$stat->Total."],"?>	
+		   <?php endforeach;?>		            
+        ]);
+        var options = { title: ''};
+        var chart = new google.visualization.ColumnChart(document.getElementById('status_chart'));
+        chart.draw(data, options);
+      }
+</script>	
+			
+<!--Grade_GEnder-->
+<script type="text/javascript">
+      google.charts.load('current', {'packages':['corechart']});
+      google.charts.setOnLoadCallback(drawChart);
+      function drawChart() {      
+        var data = google.visualization.arrayToDataTable([
+          ['Section', 'Male',"Female"],		
+		  <?php foreach($grade_gender as $gragen):?>			
+				
+				<?php echo "['".$gragen->section."',".$gragen->Male.",".$gragen->female."],"?>	
+		   <?php endforeach;?>		            
+        ]);
+       var options = { title: '', pieHole: 0.4,
+		chartArea: {
+			top:30,
+			left:150,
+			bottom: 80
+        },
+		hAxis: {
+            title: "Enrolled Students",
+			marginTop: '1'
+        },
+        vAxis: {
+            title: 'Section'
+        },};
+	  
+	  
+	  
+        var chart = new google.visualization.BarChart(document.getElementById('grade_gender_chart'));
+        chart.draw(data, options);
+      }
+</script>				
+
+<!--View ESC-->				
+<script type="text/javascript">
+      google.charts.load('current', {'packages':['corechart']});
+      google.charts.setOnLoadCallback(drawChart);
+      function drawChart() {      
+        var data = google.visualization.arrayToDataTable([
+          ['ESC Grantee', 'Total'],		
+		  <?php foreach($view_esc as $item):?>			
+				
+				<?php echo "['".$item->esc."',".$item->total."],"?>	
+		   <?php endforeach;?>		            
+        ]);
+        var options = { title: ''};
+        var chart = new google.visualization.ColumnChart(document.getElementById('esc_chart'));
+        chart.draw(data, options);
+      }
+</script>			
+	
+<!--View Voucher-->				
+<script type="text/javascript">
+      google.charts.load('current', {'packages':['corechart']});
+      google.charts.setOnLoadCallback(drawChart);
+      function drawChart() {      
+        var data = google.visualization.arrayToDataTable([
+          ['Voucher Grantee', 'Total'],		
+		  <?php foreach($view_voucher as $item):?>			
+				
+				<?php echo "['".$item->voucher."',".$item->total."],"?>	
+		   <?php endforeach;?>		            
+        ]);
+        var options = { title: ''};
+        var chart = new google.visualization.ColumnChart(document.getElementById('voucher_chart'));
+        chart.draw(data, options);
+      }
+</script>	
+
+<!--View School Type-->				
+<script type="text/javascript">
+      google.charts.load('current', {'packages':['corechart']});
+      google.charts.setOnLoadCallback(drawChart);
+      function drawChart() {      
+        var data = google.visualization.arrayToDataTable([
+          ['School Type', 'Total'],		
+		  <?php foreach($view_stype as $item):?>			
+				
+				<?php echo "['".$item->stype."',".$item->total."],"?>	
+		   <?php endforeach;?>		            
+        ]);
+        var options = { title: ''};
+        var chart = new google.visualization.ColumnChart(document.getElementById('stype_chart'));
+        chart.draw(data, options);
+      }
+</script>	
+<!--View GMRC -->				
+<script type="text/javascript">
+      google.charts.load('current', {'packages':['corechart']});
+      google.charts.setOnLoadCallback(drawChart);
+      function drawChart() {      
+        var data = google.visualization.arrayToDataTable([
+          ['GMRC Submission', 'Total'],		
+		  <?php foreach($view_gmrc as $item):?>			
+				
+				<?php echo "['".$item->gmrc."',".$item->total."],"?>	
+		   <?php endforeach;?>		            
+        ]);
+        var options = { title: ''};
+        var chart = new google.visualization.ColumnChart(document.getElementById('gmrc_chart'));
+        chart.draw(data, options);
+      }
+</script>	
+<!--View Form 138-->				
+<script type="text/javascript">
+      google.charts.load('current', {'packages':['corechart']});
+      google.charts.setOnLoadCallback(drawChart);
+      function drawChart() {      
+        var data = google.visualization.arrayToDataTable([
+          ['Form 138 Submission', 'Total'],		
+		  <?php foreach($view_form138 as $item):?>			
+				
+				<?php echo "['".$item->form138."',".$item->total."],"?>	
+		   <?php endforeach;?>		            
+        ]);
+        var options = { title: ''};
+        var chart = new google.visualization.ColumnChart(document.getElementById('form138_chart'));
+        chart.draw(data, options);
+      }
+</script>	
+
+<!--View NCAE-->				
+<script type="text/javascript">
+      google.charts.load('current', {'packages':['corechart']});
+      google.charts.setOnLoadCallback(drawChart);
+      function drawChart() {      
+        var data = google.visualization.arrayToDataTable([
+          ['NCAE Submission', 'Total'],		
+		  <?php foreach($view_ncae as $item):?>			
+				
+				<?php echo "['".$item->ncae."',".$item->total."],"?>	
+		   <?php endforeach;?>		            
+        ]);
+        var options = { title: ''};
+        var chart = new google.visualization.ColumnChart(document.getElementById('ncae_chart'));
+        chart.draw(data, options);
+      }
+</script>
+<!--View NCAE-->				
+<script type="text/javascript">
+      google.charts.load('current', {'packages':['corechart']});
+      google.charts.setOnLoadCallback(drawChart);
+      function drawChart() {      
+        var data = google.visualization.arrayToDataTable([
+          ['JH Completion Submission', 'Total'],		
+		  <?php foreach($view_junior as $item):?>			
+				
+				<?php echo "['".$item->junior."',".$item->total."],"?>	
+		   <?php endforeach;?>		            
+        ]);
+        var options = { title: ''};
+        var chart = new google.visualization.ColumnChart(document.getElementById('junior_chart'));
+        chart.draw(data, options);
+      }
+</script>
+
+<!--View Dependent-->				
+<script type="text/javascript">
+      google.charts.load('current', {'packages':['corechart']});
+      google.charts.setOnLoadCallback(drawChart);
+      function drawChart() {      
+        var data = google.visualization.arrayToDataTable([
+          ['Dependent', 'Total'],		
+		  <?php foreach($view_dependent as $item):?>			
+				
+				<?php echo "['".$item->dependent."',".$item->total."],"?>	
+		   <?php endforeach;?>		            
+        ]);
+        var options = { title: ''};
+        var chart = new google.visualization.ColumnChart(document.getElementById('dependent_chart'));
+        chart.draw(data, options);
+      }
+</script>
+
+<!--View Reconciler-->				
+<script type="text/javascript">
+      google.charts.load('current', {'packages':['corechart']});
+      google.charts.setOnLoadCallback(drawChart);
+      function drawChart() {      
+        var data = google.visualization.arrayToDataTable([
+          ['Reconciler', 'Total'],		
+		  <?php foreach($view_reconciler as $item):?>			
+				
+				<?php echo "['".$item->reconciler."',".$item->total."],"?>	
+		   <?php endforeach;?>		            
+        ]);
+        var options = { title: ''};
+        var chart = new google.visualization.ColumnChart(document.getElementById('reconciler_chart'));
+        chart.draw(data, options);
+      }
+</script>
+
+<!--View Honor-->				
+<script type="text/javascript">
+      google.charts.load('current', {'packages':['corechart']});
+      google.charts.setOnLoadCallback(drawChart);
+      function drawChart() {      
+        var data = google.visualization.arrayToDataTable([
+          ['Honor', 'Total'],		
+		  <?php foreach($view_honor as $item):?>			
+				
+				<?php echo "['".$item->honor."',".$item->total."],"?>	
+		   <?php endforeach;?>		            
+        ]);
+        var options = { title: ''};
+        var chart = new google.visualization.ColumnChart(document.getElementById('honor_chart'));
+        chart.draw(data, options);
+      }
+</script>
+
+<!--View Brother-->				
+<script type="text/javascript">
+      google.charts.load('current', {'packages':['corechart']});
+      google.charts.setOnLoadCallback(drawChart);
+      function drawChart() {      
+        var data = google.visualization.arrayToDataTable([
+          ['Brother', 'Total'],		
+		  <?php foreach($view_brother as $item):?>			
+				
+				<?php echo "['".$item->brother."',".$item->total."],"?>	
+		   <?php endforeach;?>		            
+        ]);
+        var options = { title: ''};
+        var chart = new google.visualization.ColumnChart(document.getElementById('brother_chart'));
+        chart.draw(data, options);
+      }
+</script>
+
+<script type="text/javascript">
+//var num=0;
+var $num1 = document.getElementById("vgs2");
+var $num2 = document.getElementById("vgs1");
+
+$('a[id^=gs').on('click', function(){
+
+   switch (this.id) {
+        case "gs2":	
+		case "gs3":	
+            if($num1.value==0){
+				var url1 = "<?php echo base_url(); ?>registrar/getChartData/getTotalStudGradeLevelAsc";						
+				$num1.value=1;
+			} else {
+				var url1 = "<?php echo base_url(); ?>registrar/getChartData/getTotalStudGradeLevelDesc";						
+				$num1.value=0;
+			}	
+			
+				
+			google.charts.load('current', {'packages':['corechart']});
+			google.charts.setOnLoadCallback(drawChart);
+			function drawChart() {
+			// SET CHART OPTIONS.
+				var options = {
+					title: 'Monthly sale of Books',
+					colors: ['#888', 'orange'],
+					is3D: true
+				};
+				var temp_title = 'Distribution of Total Enrolment by Grade/Section';
+				$.ajax({	
+						
+					//url : "<?php echo base_url(); ?>registrar/getChartData/getTotalStudGradeLevel",						
+					url : url1, //"<?php echo base_url(); ?>registrar/getChartData/getTotalStudGradeLevel",						
+
+					dataType: "json",
+					type: "POST",
+					contentType: "application/json; charset=utf-8",
+					success: function (data) {
+						drawMonthwiseChart(data, temp_title);
+						
+						$.each(data, function(i, o) {
+							trHTML += '<tr><td>' + o.section +
+							'</td><td>' + o.total +
+							'</td></tr>';
+						});
+
+						$('indextable').append(trHTML);
+						
+						
+						
+						
+						
+					},
+					error: function (XMLHttpRequest, textStatus, errorThrown) {
+					alert('Got an Error');
+					}
+				});
+			}							          
+            break;
+		
+        case "gs1":
+            if($num2.value==0){
+				var url1 = "<?php echo base_url(); ?>registrar/getChartData/getTotalStudGradeSectionDesc";						
+				$num2.value=1;
+			} else {
+				var url1 = "<?php echo base_url(); ?>registrar/getChartData/getTotalStudGradeSectionAsc";						
+				$num2.value=0;
+			}	
+			
+				
+			google.charts.load('current', {'packages':['corechart']});
+			google.charts.setOnLoadCallback(drawChart);
+			function drawChart() {
+			// SET CHART OPTIONS.
+				var options = {
+					title: 'Monthly sale of Books',
+					colors: ['#888', 'orange'],
+					is3D: true
+				};
+				var temp_title = '';
+				$.ajax({	
+						
+					//url : "<?php echo base_url(); ?>registrar/getChartData/getTotalStudGradeLevel",						
+					url : url1, //"<?php echo base_url(); ?>registrar/getChartData/getTotalStudGradeLevel",						
+
+					dataType: "json",
+					type: "POST",
+					contentType: "application/json; charset=utf-8",
+					success: function (data) {
+						drawMonthwiseChart(data, temp_title);
+					},
+					error: function (XMLHttpRequest, textStatus, errorThrown) {
+					alert('Got an Error');
+					}
+				});
+			}							          
+            break;          
+            break;
+		/*	
+        case "gs3":
+            alert(this.id);
+            break;
+		*/
+    }
+});
+
+
+
+function drawMonthwiseChart(chart_data, chart_main_title)
+{
+    var jsonData = chart_data;
+    var data = new google.visualization.DataTable();
+    data.addColumn('string', 'Section');
+    data.addColumn('number', 'Total');
+
+    $.each(jsonData, function(i, jsonData){
+        var section = jsonData.section;
+        var total = parseFloat($.trim(jsonData.Total));
+        data.addRows([[section, total]]);
+    });
+
+    var options = {
+        title:chart_main_title,
+		chartArea: {
+			top:80,
+			left:150,
+			bottom: 80
+        }, 
+		hAxis: {
+            title: "Enrolled Students"
+        },
+        vAxis: {
+            title: 'Section'
+        },
+       // chartArea:{width:'80%',height:'85%'}
+    }
+
+    var chart = new google.visualization.BarChart(document.getElementById('section_chart'));
+		function selectHandler() {
+          var selectedItem = chart.getSelection()[0];
+          if (selectedItem) {
+            var topping = data.getValue(selectedItem.row, 0);
+            alert('The user selected ' + topping);
+          }
+        }
+
+        google.visualization.events.addListener(chart, 'select', selectHandler); 
+   
+    chart.draw(data, options);
+}
+</script>
+<script src="<?php echo base_url();?>assets/1/sortable.js"></script>
+<script type="text/javascript">
+function SortTableSection(n) {
+  var table, rows, switching, i, x, y, shouldSwitch, dir, switchcount = 0;
+  table = document.getElementById("indextable");
+  switching = true;
+  // Set the sorting direction to ascending:
+  dir = "asc";
+  /* Make a loop that will continue until
+  no switching has been done: */
+  while (switching) {
+    // Start by saying: no switching is done:
+    switching = false;
+    rows = table.rows;
+    /* Loop through all table rows (except the
+    first, which contains table headers): */
+    for (i = 1; i < (rows.length - 1); i++) {
+      // Start by saying there should be no switching:
+      shouldSwitch = false;
+      /* Get the two elements you want to compare,
+      one from current row and one from the next: */
+      x = rows[i].getElementsByTagName("TD")[n];
+      y = rows[i + 1].getElementsByTagName("TD")[n];
+      /* Check if the two rows should switch place,
+      based on the direction, asc or desc: */
+      if (dir == "asc") {
+        if (x.innerHTML.toLowerCase() > y.innerHTML.toLowerCase()) {
+          // If so, mark as a switch and break the loop:
+          shouldSwitch = true;
+          break;
+        }
+      } else if (dir == "desc") {
+        if (x.innerHTML.toLowerCase() < y.innerHTML.toLowerCase()) {
+          // If so, mark as a switch and break the loop:
+          shouldSwitch = true;
+          break;
+        }
+      }
+    }
+    if (shouldSwitch) {
+      /* If a switch has been marked, make the switch
+      and mark that a switch has been done: */
+      rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
+      switching = true;
+      // Each time a switch is done, increase this count by 1:
+      switchcount ++;
+    } else {
+      /* If no switching has been done AND the direction is "asc",
+      set the direction to "desc" and run the while loop again. */
+      if (switchcount == 0 && dir == "asc") {
+        dir = "desc";
+        switching = true;
+      }
+    }
+  }
+}
+</script>
+
+
+
